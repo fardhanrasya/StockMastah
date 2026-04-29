@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMaster Inventory</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-base-200 min-h-screen">
+    <div class="navbar bg-base-100 shadow-md">
+        <div class="flex-1">
+            <a class="btn btn-ghost normal-case text-xl">📦 StockMaster</a>
+        </div>
+        <div class="flex-none gap-2">
+            <button id="logoutBtn" class="btn btn-error btn-sm hidden">Logout</button>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-4 mt-8">
+        <!-- Login Section -->
+        <div id="loginSection" class="card w-96 bg-base-100 shadow-xl mx-auto">
+            <div class="card-body">
+                <h2 class="card-title justify-center">Login</h2>
+                <div class="form-control">
+                    <label class="label"><span class="label-text">Username</span></label>
+                    <input type="text" id="username" class="input input-bordered" placeholder="admin" />
+                </div>
+                <div class="form-control">
+                    <label class="label"><span class="label-text">Password</span></label>
+                    <input type="password" id="password" class="input input-bordered" placeholder="admin123" />
+                </div>
+                <div class="form-control mt-6">
+                    <button id="loginBtn" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="hidden space-y-6">
+            <div class="stats shadow w-full">
+                <div class="stat">
+                    <div class="stat-title">System Status</div>
+                    <div class="stat-value text-success" id="healthStatus">Checking...</div>
+                    <div class="stat-desc">Application Health</div>
+                </div>
+            </div>
+
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="card-title">Products</h2>
+                        <button id="refreshProductsBtn" class="btn btn-sm btn-outline">Refresh</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="table w-full">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
