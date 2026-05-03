@@ -26,6 +26,9 @@ async function seed() {
         database: process.env.DB_NAME || 'stockmaster_prod',
         user: process.env.DB_USER || 'stockmaster_admin',
         password: dbPassword,
+        ssl: {
+            rejectUnauthorized: false
+        }
     });
 
     try {
