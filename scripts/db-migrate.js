@@ -8,6 +8,16 @@ async function migrate() {
     let dbPassword = process.env.DB_PASSWORD;
     const region = process.env.AWS_REGION || 'us-west-2';
 
+    if (dbPassword && dbPassword.startsWith('arn:aws:secretsmanager:')) {
+        process.env.DB_SECRET_NAME = dbPassword;
+        dbPassword = null;
+    } else if (dbPassword && dbPassword.startsWith('{')) {
+        try {
+            const parsed = JSON.parse(dbPassword);
+            dbPassword = parsed.password || dbPassword;
+        } catch (e) {}
+    }
+
     if (!dbPassword && process.env.DB_SECRET_NAME) {
         const smClient = new SecretsManagerClient({ region });
         try {

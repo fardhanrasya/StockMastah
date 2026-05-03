@@ -30,6 +30,16 @@ let pool;
 async function initDB() {
     let dbPassword = process.env.DB_PASSWORD;
     
+    if (dbPassword && dbPassword.startsWith('arn:aws:secretsmanager:')) {
+        process.env.DB_SECRET_NAME = dbPassword;
+        dbPassword = null;
+    } else if (dbPassword && dbPassword.startsWith('{')) {
+        try {
+            const parsed = JSON.parse(dbPassword);
+            dbPassword = parsed.password || dbPassword;
+        } catch (e) {}
+    }
+
     // Attempt to get password from Secrets Manager if DB_PASSWORD is not set directly
     if (!dbPassword && process.env.DB_SECRET_NAME) {
         try {
